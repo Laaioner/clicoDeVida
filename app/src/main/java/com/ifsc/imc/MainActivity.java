@@ -8,28 +8,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
     Button button;
-    EditText editTextText;
+    EditText editTextAltura, editTextPeso;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         button = findViewById(R.id.button);
-        editTextText = findViewById(R.id.editTextText);
+        editTextAltura = findViewById(R.id.editTextAltura);
+        editTextPeso = findViewById(R.id.editTextPeso);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MsgActivity.class);
-                String teste = editTextText.getText().toString();
-                i.putExtra("msg",teste);
+                String altura = editTextAltura.getText().toString();
+                String peso = editTextPeso.getText().toString();
+                i.putExtra("msg",altura);
                 startActivity(i);
             }
         });
