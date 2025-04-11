@@ -1,5 +1,6 @@
 package com.ifsc.imc;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -9,9 +10,9 @@ import android.view.MotionEvent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class CustomButton extends  androidx.appcompat.widget.AppCompatButton{
-    float inicialx;
-
+public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
+    float toqueInicialX;
+    float buttonInicialX;
     public CustomButton(@NonNull Context context) {
         super(context);
     }
@@ -26,26 +27,41 @@ public class CustomButton extends  androidx.appcompat.widget.AppCompatButton{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d( "Coordenadas","x" + Float.toString(event.getX())+
-                " y"+Float.toString(event.getY()));
+        Log.d("Coordenadas" ,
+                "  x:"+ Float.toString(event.getRawX())+
+                        "  y:"+Float.toString(event.getRawY()));
 
-       int acao=event.getAction();
+        int acao=event.getAction();
+        switch (event.getAction()){
 
-       switch (event.getAction()){
-           case (MotionEvent.ACTION_DOWN):
-               inicialx=event.getRawX();
-               return true;
+            case (MotionEvent.ACTION_DOWN):
+                toqueInicialX = event.getRawX();
+                buttonInicialX=this.getX();
 
-           case (MotionEvent.ACTION_MOVE):
-               if(inicialx < event.getRawX()){
-                   this.setBackgroundColor(Color.GREEN);
-               }
-               if(inicialx > event.getRawX()){
-                   this.setBackgroundColor(Color.RED);
-               }
-               return true;
-       }
-    return true;
+                return true;
+            case (MotionEvent.ACTION_MOVE):
+                float delta=event.getRawX()- toqueInicialX;
+                this.setX(delta+buttonInicialX);
 
+                float normalized = Math.max(-1f, Math.min(1f, delta / getWidth()));
+                int red = (int) (255 * (1 - normalized) / 2);
+                int green = (int) (255 * (1 + normalized) / 2);
+                this.setBackgroundColor(Color.rgb(red,green,0));
+                return true;
+
+            case (MotionEvent.ACTION_UP):
+
+                this.setBackgroundColor(Color.GRAY);
+
+                ObjectAnimator animator =  ObjectAnimator.ofFloat(this,"x",this.getX(),buttonInicialX);
+                animator.setDuration(500);
+                animator.start();
+                return true;
+
+        }
+
+
+
+        return true;
     }
 }
