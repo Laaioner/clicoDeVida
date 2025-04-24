@@ -21,8 +21,8 @@ public class MsgActivity extends AppCompatActivity {
         textResultado = findViewById(R.id.textResultado);
 
         Bundle bundle = getIntent().getExtras();
-        textView2.setText(bundle.getString("msg"));
-        textResultado.setText(bundle.getString(""));
+        //textView2.setText(bundle.getString("msg"));
+        textResultado.setText(bundle.getString("imc"));
 
     }
 }

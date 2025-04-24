@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     EditText editTextAltura, editTextPeso;
 
+    Float resultado;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +28,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MsgActivity.class);
-                String altura = editTextAltura.getText().toString();
-                String peso = editTextPeso.getText().toString();
-                i.putExtra("msg",altura);
+                Float altura = Float.valueOf(editTextAltura.getText().toString()) / 100;
+                Float peso = Float.valueOf(editTextPeso.getText().toString());
+                resultado = peso / (altura * altura);
+                i.putExtra("imc",Float.toString(resultado));
                 startActivity(i);
             }
         });
@@ -37,51 +40,5 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,"OnCreate", Toast.LENGTH_LONG).show();
 
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("clicodevida", "onStart");
-        Toast.makeText(this,"onStart", Toast.LENGTH_LONG).show();
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("clicodevida", "onResume");
-        Toast.makeText(this,"onResume", Toast.LENGTH_LONG).show();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("clicodevida", "onPause");
-        Toast.makeText(this,"onPause", Toast.LENGTH_LONG).show();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("clicodevida", "onStop");
-        Toast.makeText(this,"onStop", Toast.LENGTH_LONG).show();
-
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("clicodevida", "OnRestart");
-        Toast.makeText(this,"onRestart", Toast.LENGTH_LONG).show();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("clicodevida", "onDestroy");
-        Toast.makeText(this,"onDestroy", Toast.LENGTH_LONG).show();
-
-    }
 }
